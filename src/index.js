@@ -1,4 +1,13 @@
+const formLnk = document.querySelector(".search-form");
 
+console.log(formLnk);
+
+formLnk.addEventListener("submit", onSubmitBtn);
+
+function onSubmitBtn(e) { 
+    e.preventDefault();    
+
+}
 
 /**
  const { height: cardHeight } = document
