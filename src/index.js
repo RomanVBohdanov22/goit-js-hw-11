@@ -1,12 +1,18 @@
 const formLnk = document.querySelector(".search-form");
 
-console.log(formLnk);
+//console.log(formLnk);
 
 formLnk.addEventListener("submit", onSubmitBtn);
 
 function onSubmitBtn(e) { 
     e.preventDefault();    
+    const {
+        elements: { searchQuery }
+    } = e.currentTarget;
 
+    if (!searchQuery.value) return console.log("Please, enter searchQuery!");
+    console.log(`inputLine ${searchQuery.value}`);
+    //e.currentTarget.reset();
 }
 
 /**
