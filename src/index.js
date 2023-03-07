@@ -2,6 +2,8 @@ import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+import { galleryFetch } from './js/galleryFetch';
+
 const formLnk = document.querySelector(".search-form");
 const gallery = document.querySelector('.gallery');
 //console.log(formLnk);
