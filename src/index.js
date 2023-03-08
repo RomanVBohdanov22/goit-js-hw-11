@@ -22,6 +22,8 @@ function onSubmitBtn(e) {
     console.log(`${splittedLine}`);
     console.log(`${joinedLine}`);
     //e.currentTarget.reset();
+
+    galleryFetch(joinedLine);
 }
 
 /*<!-- 
