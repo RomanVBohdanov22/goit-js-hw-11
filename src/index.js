@@ -15,9 +15,12 @@ function onSubmitBtn(e) {
     const {
         elements: { searchQuery }
     } = e.currentTarget;
-
     if (!searchQuery.value) return console.log("Please, enter searchQuery!");
+    let splittedLine = searchQuery.value.trim().split(' ');
+    let joinedLine = splittedLine.join('+');
     console.log(`inputLine ${searchQuery.value}`);
+    console.log(`${splittedLine}`);
+    console.log(`${joinedLine}`);
     //e.currentTarget.reset();
 }
 

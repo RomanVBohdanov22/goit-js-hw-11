@@ -1,3 +1,4 @@
+const axios = require('axios').default;
 KEY = '34203020 - 9ccd90725bbcf7c5b689f6c58';
 BASE_URL = 'https://pixabay.com/api/';
 
@@ -24,3 +25,15 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
   .then(post => console.log(post))
   .catch(error => console.log(error));
  */
+
+  /*
+// Want to use async/await? Add the `async` keyword to your outer function/method.
+async function getUser() {
+  try {
+    const response = await axios.get('/user?ID=12345');
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+   */
