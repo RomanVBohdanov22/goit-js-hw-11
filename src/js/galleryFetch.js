@@ -8,7 +8,7 @@ export function galleryFetch(line) {
 }
 
 //https://pixabay.com/api/?key=34203020-9ccd90725bbcf7c5b689f6c58&q=yellow+flowers&image_type=photo
-
+//https://pixabay.com/api/?key=34203020-9ccd90725bbcf7c5b689f6c58&q=yellow+flowers&image_type=photo&page=1&per_page=4
 
 /*
 fetch("https://jsonplaceholder.typicode.com/posts")
