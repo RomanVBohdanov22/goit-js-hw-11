@@ -5,7 +5,7 @@ const ABS_FIELFS = '&image_type=photo&orientation=horizontal&safesearch=true';
 
 export async function galleryFetch(queryLine) { 
     let PAGE = 1;
-    let PER_PAGE = 20;
+    let PER_PAGE = 40;
     let FIELDS = ABS_FIELFS+`&page=${PAGE}&per_page=${PER_PAGE}`;
     const searchUrl = BASE_URL + KEY + '&q=' + queryLine + FIELDS;
     console.log(searchUrl);
