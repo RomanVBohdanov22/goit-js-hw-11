@@ -103,8 +103,9 @@ function readDataArray(hitsArray) {
 }
 
 function onLoadMoreBtn() {    
-    if (globalSearchQuery === "") { return; }
+    if (globalSearchQuery === "")  return; 
     currentPage += 1;
+    loadMoreLnk.classList.add('hidden');
     Notify.info(`onLoadMoreBtn ${currentPage}`);
     galleryFetch(globalSearchQuery, currentPage).then(data => {
         renderData(data);
