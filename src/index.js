@@ -1,50 +1,85 @@
-import SimpleLightbox from "simplelightbox";
+import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { galleryFetch } from './js/galleryFetch';
 
-const formLnk = document.querySelector(".search-form");
+const formLnk = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const loadMoreLnk = document.querySelector('.load-more');
 
-//loadMoreLnk.classList.add('hidden');
+let currentPage = 1;
+let globalSearchQuery = "";
+//
 
-formLnk.addEventListener("submit", onSubmitBtn);
+formLnk.addEventListener('submit', onSubmitBtn);
 
-loadMoreLnk.addEventListener("click", onLoadMoreBtn);
+loadMoreLnk.addEventListener('click', onLoadMoreBtn);
+loadMoreLnk.classList.add('hidden');
 
 function onSubmitBtn(e) {
     e.preventDefault();
-    const {
-        elements: { searchQuery }
+    currentPage = 1;
+  const {
+    elements: { searchQuery },
     } = e.currentTarget;
-    if ((searchQuery.value.trim()).length === 0) {
-        loadMoreLnk.classList.add('hidden');
-        gallery.innerHTML = '';
-        Notify.failure("Please, enter searchQuery!");
-        return;
-    }
-    let splittedLine = searchQuery.value.trim().split(' ');
-    let joinedLine = splittedLine.join('+');
-    console.log(`${joinedLine}`); 
-    galleryFetch(joinedLine).then(data => {renderData(data);
-});
+    
+  if (searchQuery.value.trim().length === 0) {
+    loadMoreLnk.classList.add('hidden');
+    gallery.innerHTML = '';
+    Notify.failure('Please, enter searchQuery!');
+    return;
+  }
+  let splittedLine = searchQuery.value.trim().split(' ');
+  let joinedLine = splittedLine.join('+');
+    console.log(`${joinedLine}`);
+    globalSearchQuery = joinedLine;
+  galleryFetch(globalSearchQuery, currentPage).then(data => {
+    renderData(data);
+  });
 }
 
-function renderData(dataResponse) { 
-    console.log("this is renderData");
-    gallery.innerHTML = "";
-    const hitsArray = dataResponse.data.hits;
-    //const totalHits = 
-    if (hitsArray.length === 0) {
-        Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-        //loadMoreLnk.classList.add('hidden');
-        return;
-    }
-    console.log(hitsArray[0]);
- //previewURL
-    const galleryMurkup = hitsArray.map(({ largeImageURL, webformatURL, tags, likes, views, comments, downloads }) => {
+function renderData(dataResponse) {
+  console.log('this is renderData');
+  gallery.innerHTML = '';
+  const hitsArray = dataResponse.data.hits;
+  loadMoreLnk.classList.add('hidden');
+  if (hitsArray.length === 0) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return;
+  }
+ 
+    const galleryMurkup = readDataArray(hitsArray);    
+  gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
+  
+  var lightbox = new SimpleLightbox('.gallery a', {
+    captionDelay: 250,
+    captionsData: 'alt',
+  });
+    lightbox.refresh();
+      if (dataResponse.data.totalHits < 40) {
+    Notify.warning(
+      "We're sorry, but you've reached the end of search results."
+          );
+          globalSearchQuery = "";
+          currentPage = 1;
+  } else loadMoreLnk.classList.remove('hidden');
+}
+
+function readDataArray(hitsArray) { 
+    //previewURL
+    return hitsArray.map(
+      ({
+        largeImageURL,
+        webformatURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
         return `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
@@ -61,22 +96,19 @@ function renderData(dataResponse) {
       <b>Downloads ${downloads}</b>
     </p>
   </div>
-</div></a>`; }
-    ).join('');
-    gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
-    loadMoreLnk.classList.toggle('hidden');
-var lightbox = new SimpleLightbox('.gallery a', {
-  captionDelay: 250,
-  captionsData: 'alt',
-});
-    lightbox.refresh();
-    
+</div></a>`;
+      }
+    )
+    .join('')
 }
 
-
-function onLoadMoreBtn()
-{ 
-    Notify.info('onLoadMoreBtn');
+function onLoadMoreBtn() {    
+    if (globalSearchQuery === "") { return; }
+    currentPage += 1;
+    Notify.info(`onLoadMoreBtn ${currentPage}`);
+    galleryFetch(globalSearchQuery, currentPage).then(data => {
+        renderData(data);
+    });
 }
 /**
  const { height: cardHeight } = document
@@ -88,4 +120,3 @@ window.scrollBy({
   behavior: "smooth",
 });
  */
-
