@@ -17,8 +17,6 @@ function onSubmitBtn(e) {
     if (!searchQuery.value) return console.log("Please, enter searchQuery!");
     let splittedLine = searchQuery.value.trim().split(' ');
     let joinedLine = splittedLine.join('+');
-    //console.log(`inputLine ${searchQuery.value}`);
-    //console.log(`${splittedLine}`);
     console.log(`${joinedLine}`); 
     galleryFetch(joinedLine).then(data => {renderData(data);
 });
@@ -31,7 +29,6 @@ function renderData(dataResponse) {
     if (hitsArray.length === 0) return;
     console.log(hitsArray[0]);
  //previewURL
-//largeImageURL    
     const galleryMurkup = hitsArray.map(({ largeImageURL, webformatURL, tags, likes, views, comments, downloads }) => {
         return `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
@@ -58,55 +55,6 @@ var lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
 });
 }
-
-/*<!-- 
-<div class="photo-card">
-  <img src="" alt="" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-    </p>
-  </div>
-</div>
-
--->*/
-
-/*
-const galleryMurkup = galleryItems
-  .map(({ preview, original, description }) => {
-    return `<li>
-    <a class="gallery__item" href="${original}">
-        <img
-            class="gallery__image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
-        />
-    </a>
-    </li>
-`;
-  })
-  .join('');
-
-gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
-
-console.log(gallery);
-
-var lightbox = new SimpleLightbox('.gallery a', {
-  captionDelay: 250,
-  captionsData: 'alt',
-});
- */
-
 
 /**
  const { height: cardHeight } = document
