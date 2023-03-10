@@ -10,8 +10,8 @@ const gallery = document.querySelector('.gallery');
 
 formLnk.addEventListener("submit", onSubmitBtn);
 
-function onSubmitBtn(e) { 
-    e.preventDefault();    
+function onSubmitBtn(e) {
+    e.preventDefault();
     const {
         elements: { searchQuery }
     } = e.currentTarget;
@@ -21,9 +21,40 @@ function onSubmitBtn(e) {
     console.log(`inputLine ${searchQuery.value}`);
     console.log(`${splittedLine}`);
     console.log(`${joinedLine}`);
-    //e.currentTarget.reset();
+    //const galleryData = 
+    //const galleryData = galleryFetch(joinedLine);//.map(({ largeImageURL, previewURL, tags }) => { return largeImageURL + " " + previewURL + " " + tags; });
+    //console.log({largeImageURL, previewURL, tags});
+    //console.log("gallery data ", galleryData);
+    
+    galleryFetch(joinedLine).then(data => {renderData(data);
+});
+}
 
-    galleryFetch(joinedLine);
+function renderData(dataResponse) { 
+    console.log("this is renderData");
+    console.log(dataResponse.data.hits);
+    const hitsArray = dataResponse.data.hits;
+    console.log(hitsArray[0]);
+ 
+    const galleryMurkup = hitsArray.map(({ largeImageURL, tags, likes, views, comments, downloads }) => { return `<div class="photo-card">
+  <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
+  <div class="info">
+    <p class="info-item">
+      <b>Likes ${likes}</b>
+    </p>
+    <p class="info-item">
+      <b>Views ${views}</b>
+    </p>
+    <p class="info-item">
+      <b>Comments ${comments}</b>
+    </p>
+    <p class="info-item">
+      <b>Downloads ${downloads}</b>
+    </p>
+  </div>
+</div>`; }
+    ).join('');
+gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 }
 
 /*<!-- 

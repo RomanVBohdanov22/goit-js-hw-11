@@ -11,9 +11,8 @@ export async function galleryFetch(queryLine) {
     //return searchUrl;
     try {
         let response = await axios.get(searchUrl);
-        console.log(response);
-        console.log(response.data.hits);
-        console.log(response.data.hits.map(({ largeImageURL }) => { return largeImageURL; })[0]);
+
+        return response;//.data.hits;
     }
     catch (e) { 
         console.error(e);
