@@ -32,7 +32,8 @@ function renderData(dataResponse) {
     console.log(hitsArray[0]);
  //previewURL
 //largeImageURL    
-    const galleryMurkup = hitsArray.map(({ webformatURL, tags, likes, views, comments, downloads }) => { return `<div class="photo-card">
+    const galleryMurkup = hitsArray.map(({ largeImageURL, webformatURL, tags, likes, views, comments, downloads }) => {
+        return `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
@@ -48,9 +49,14 @@ function renderData(dataResponse) {
       <b>Downloads ${downloads}</b>
     </p>
   </div>
-</div>`; }
+</div></a>`; }
     ).join('');
-gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
+    gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
+    
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+});
 }
 
 /*<!-- 
