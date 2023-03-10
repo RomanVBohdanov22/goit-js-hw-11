@@ -1,18 +1,20 @@
 const axios = require('axios').default;
-KEY = '?key=34203020-9ccd90725bbcf7c5b689f6c58&q=';
 BASE_URL = 'https://pixabay.com/api/';
-FIELDS ='&image_type=photo&page=1&per_page=5';
+KEY = '?key=34203020-9ccd90725bbcf7c5b689f6c58';
+TERM = '&q=';
+FIELDS ='&image_type=photo&orientation=horizontal&safesearch=true&page=1&per_page=5';
 
 export async function galleryFetch(queryLine) { 
 
-    const searchUrl = BASE_URL + KEY + queryLine + FIELDS;
+    const searchUrl = BASE_URL + KEY + TERM
+        + queryLine + FIELDS;
     console.log('searchUrl:');
     console.log(searchUrl);
     //return searchUrl;
     try {
         let response = await axios.get(searchUrl);
-
-        return response;//.data.hits;
+            //if (!response.ok) throw new Error(response.status);
+        return response;
     }
     catch (e) { 
         console.error(e);

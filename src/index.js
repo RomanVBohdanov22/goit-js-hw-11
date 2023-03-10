@@ -6,7 +6,6 @@ import { galleryFetch } from './js/galleryFetch';
 
 const formLnk = document.querySelector(".search-form");
 const gallery = document.querySelector('.gallery');
-//console.log(formLnk);
 
 formLnk.addEventListener("submit", onSubmitBtn);
 
@@ -18,14 +17,9 @@ function onSubmitBtn(e) {
     if (!searchQuery.value) return console.log("Please, enter searchQuery!");
     let splittedLine = searchQuery.value.trim().split(' ');
     let joinedLine = splittedLine.join('+');
-    console.log(`inputLine ${searchQuery.value}`);
-    console.log(`${splittedLine}`);
-    console.log(`${joinedLine}`);
-    //const galleryData = 
-    //const galleryData = galleryFetch(joinedLine);//.map(({ largeImageURL, previewURL, tags }) => { return largeImageURL + " " + previewURL + " " + tags; });
-    //console.log({largeImageURL, previewURL, tags});
-    //console.log("gallery data ", galleryData);
-    
+    //console.log(`inputLine ${searchQuery.value}`);
+    //console.log(`${splittedLine}`);
+    console.log(`${joinedLine}`); 
     galleryFetch(joinedLine).then(data => {renderData(data);
 });
 }
@@ -33,13 +27,13 @@ function onSubmitBtn(e) {
 function renderData(dataResponse) { 
     console.log("this is renderData");
     gallery.innerHTML = "";
-    console.log(dataResponse.data.hits);
     const hitsArray = dataResponse.data.hits;
+    if (hitsArray.length === 0) return;
     console.log(hitsArray[0]);
  //previewURL
-//largeImageURL
-    const galleryMurkup = hitsArray.map(({ previewURL, tags, likes, views, comments, downloads }) => { return `<div class="photo-card">
-  <img src="${previewURL}" alt="${tags}" loading="lazy" />
+//largeImageURL    
+    const galleryMurkup = hitsArray.map(({ webformatURL, tags, likes, views, comments, downloads }) => { return `<div class="photo-card">
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes ${likes}</b>
