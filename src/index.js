@@ -32,12 +32,14 @@ function onSubmitBtn(e) {
 
 function renderData(dataResponse) { 
     console.log("this is renderData");
+    gallery.innerHTML = "";
     console.log(dataResponse.data.hits);
     const hitsArray = dataResponse.data.hits;
     console.log(hitsArray[0]);
- 
-    const galleryMurkup = hitsArray.map(({ largeImageURL, tags, likes, views, comments, downloads }) => { return `<div class="photo-card">
-  <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
+ //previewURL
+//largeImageURL
+    const galleryMurkup = hitsArray.map(({ previewURL, tags, likes, views, comments, downloads }) => { return `<div class="photo-card">
+  <img src="${previewURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes ${likes}</b>
