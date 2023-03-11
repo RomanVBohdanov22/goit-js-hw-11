@@ -13,6 +13,11 @@ let currentHits = 0;
 let globalSearchQuery = '';
 //
 
+  var lightbox = new SimpleLightbox('.gallery a', {
+    captionDelay: 250,
+    captionsData: 'alt',
+  });
+
 formLnk.addEventListener('submit', onSubmitBtn);
 
 loadMoreLnk.addEventListener('click', onLoadMoreBtn);
@@ -33,9 +38,11 @@ function onSubmitBtn(e) {
     return;
   }
   let splittedLine = searchQuery.value.trim().split(' ');
+  //прибрати split
   let joinedLine = splittedLine.join('+');
   console.log(`${joinedLine}`);
   globalSearchQuery = joinedLine;
+  /* asink await */
   galleryFetch(globalSearchQuery, currentPage).then(data => {
     renderData(data);
   });
@@ -58,10 +65,7 @@ function renderData(dataResponse) {
   const galleryMurkup = readDataArray(hitsArray);
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 
-  var lightbox = new SimpleLightbox('.gallery a', {
-    captionDelay: 250,
-    captionsData: 'alt',
-  });
+
     lightbox.refresh();
 
     currentHits += dataResponse.data.hits.length;
@@ -89,7 +93,7 @@ function readDataArray(hitsArray) {
         downloads,
       }) => {
         return `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+  <div class="photo-container"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></div>
   <div class="info">
     <p class="info-item">
       <b>Likes ${likes}</b>
