@@ -27,21 +27,23 @@ body {
   width: 320px;
   border: none;
   border-style: hidden;
-  border-radius: 3%;
+  /*border-radius: 3%;*/
   font-weight: 500;
   font-style: normal;
-  font-family: Tahoma, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; /*Tahoma, sans-serif;*/
 }
 
 .search-form button {
   position: relative;
   display: flex;
   top: 0px;
-  right: 38px;
+  right: 31px;
+  border-radius: 3%;
+  padding: 0;
   background: none;
   border: none;
   justify-content: center;
-  padding-left: 3px;
+  /*padding-left: 3px;*/
 }
 
 .search-form button:hover {
