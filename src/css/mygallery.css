@@ -61,7 +61,7 @@ body {
 .gallery {
   display: grid;
   max-width: 1140px;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   /*grid-auto-rows: 600px;*/
   grid-gap: 12px;
   justify-content: center;
@@ -86,7 +86,6 @@ body {
   display: block;
   max-width: 100%;
   height: auto;
-  /*width: 100%;*/
   object-fit: cover;
 }
 
@@ -97,17 +96,24 @@ body {
 .gallery .info {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  justify-content: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  gap: 8px;
 }
 
 .gallery .info-item {
   flex-direction: column;
   justify-content: center;
-  padding-left: 8px;
+  font-size: small;
+  font-weight: 500;
+  font-style: normal;
+  margin-bottom: 8px;
 }
 
+/*
 .info-item p {
   flex-direction: column;
   justify-content: center;
-  /*color: #212121;*/
 }
+*/
