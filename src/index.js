@@ -9,7 +9,7 @@ const gallery = document.querySelector('.gallery');
 const loadMoreLnk = document.querySelector('.load-more');
 
 let currentPage = 1;
-let globalSearchQuery = "";
+let globalSearchQuery = '';
 //
 
 formLnk.addEventListener('submit', onSubmitBtn);
@@ -18,12 +18,12 @@ loadMoreLnk.addEventListener('click', onLoadMoreBtn);
 loadMoreLnk.classList.add('hidden');
 
 function onSubmitBtn(e) {
-    e.preventDefault();
-    currentPage = 1;
+  e.preventDefault();
+  currentPage = 1;
   const {
     elements: { searchQuery },
-    } = e.currentTarget;
-    
+  } = e.currentTarget;
+
   if (searchQuery.value.trim().length === 0) {
     loadMoreLnk.classList.add('hidden');
     gallery.innerHTML = '';
@@ -32,8 +32,8 @@ function onSubmitBtn(e) {
   }
   let splittedLine = searchQuery.value.trim().split(' ');
   let joinedLine = splittedLine.join('+');
-    console.log(`${joinedLine}`);
-    globalSearchQuery = joinedLine;
+  console.log(`${joinedLine}`);
+  globalSearchQuery = joinedLine;
   galleryFetch(globalSearchQuery, currentPage).then(data => {
     renderData(data);
   });
@@ -44,33 +44,35 @@ function renderData(dataResponse) {
   gallery.innerHTML = '';
   const hitsArray = dataResponse.data.hits;
   loadMoreLnk.classList.add('hidden');
-  if (hitsArray.length === 0) {
+  if (dataResponse.data.totalHits <= 0) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
     return;
-  }
- 
-    const galleryMurkup = readDataArray(hitsArray);    
+    } Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images. 
+  ${dataResponse.data.hits.length}img.@${currentPage}pg.`);
+
+  const galleryMurkup = readDataArray(hitsArray);
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
-  
+
   var lightbox = new SimpleLightbox('.gallery a', {
     captionDelay: 250,
     captionsData: 'alt',
   });
-    lightbox.refresh();
-      if (dataResponse.data.totalHits < 40) {
+  lightbox.refresh();
+  if (dataResponse.data.hits.length < 40) {
     Notify.warning(
       "We're sorry, but you've reached the end of search results."
-          );
-          globalSearchQuery = "";
-          currentPage = 1;
+    );
+    globalSearchQuery = '';
+    currentPage = 1;
   } else loadMoreLnk.classList.remove('hidden');
 }
 
-function readDataArray(hitsArray) { 
-    //previewURL
-    return hitsArray.map(
+function readDataArray(hitsArray) {
+  //previewURL
+  return hitsArray
+    .map(
       ({
         largeImageURL,
         webformatURL,
@@ -99,17 +101,17 @@ function readDataArray(hitsArray) {
 </div></a>`;
       }
     )
-    .join('')
+    .join('');
 }
 
-function onLoadMoreBtn() {    
-    if (globalSearchQuery === "")  return; 
-    currentPage += 1;
-    loadMoreLnk.classList.add('hidden');
-    Notify.info(`onLoadMoreBtn ${currentPage}`);
-    galleryFetch(globalSearchQuery, currentPage).then(data => {
-        renderData(data);
-    });
+function onLoadMoreBtn() {
+  if (globalSearchQuery === '') return;
+  currentPage += 1;
+  loadMoreLnk.classList.add('hidden');
+  Notify.info(`onLoadMoreBtn ${currentPage}`);
+  galleryFetch(globalSearchQuery, currentPage).then(data => {
+    renderData(data);
+  });
 }
 /**
  const { height: cardHeight } = document
