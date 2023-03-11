@@ -55,7 +55,7 @@ function renderData(dataResponse) {
   Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images. 
   ${dataResponse.data.hits.length}img.@ pg.${currentPage}`);
 
-  Notify.info(`Page: ${currentPage}`);
+ 
   const galleryMurkup = readDataArray(hitsArray);
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 
@@ -64,8 +64,9 @@ function renderData(dataResponse) {
     captionsData: 'alt',
   });
     lightbox.refresh();
-    //(((currentPage-1)*40)+dataResponse.data.hits.length) 
+
     currentHits += dataResponse.data.hits.length;
+    Notify.info(`Page: ${currentPage}, shown ${currentHits} from ${dataResponse.data.totalHits}`);
   if (currentHits >= dataResponse.data.totalHits) {
     Notify.warning(
       "We're sorry, but you've reached the end of search results."
@@ -118,8 +119,10 @@ function onLoadMoreBtn() {
     renderData(data);
   });
 }
-/**
- const { height: cardHeight } = document
+
+///
+
+const { height: cardHeight } = document
   .querySelector(".gallery")
   .firstElementChild.getBoundingClientRect();
 
@@ -127,4 +130,4 @@ window.scrollBy({
   top: cardHeight * 2,
   behavior: "smooth",
 });
- */
+
