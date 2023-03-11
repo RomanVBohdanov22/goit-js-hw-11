@@ -9,6 +9,7 @@ const gallery = document.querySelector('.gallery');
 const loadMoreLnk = document.querySelector('.load-more');
 
 let currentPage = 1;
+let currentHits = 0;
 let globalSearchQuery = '';
 //
 
@@ -19,7 +20,8 @@ loadMoreLnk.classList.add('hidden');
 
 function onSubmitBtn(e) {
   e.preventDefault();
-  currentPage = 1;
+    currentPage = 1;
+    currentHits = 0;
   const {
     elements: { searchQuery },
   } = e.currentTarget;
@@ -49,9 +51,11 @@ function renderData(dataResponse) {
       'Sorry, there are no images matching your search query. Please try again.'
     );
     return;
-    } Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images. 
-  ${dataResponse.data.hits.length}img.@${currentPage}pg.`);
+  }
+  Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images. 
+  ${dataResponse.data.hits.length}img.@ pg.${currentPage}`);
 
+  Notify.info(`Page: ${currentPage}`);
   const galleryMurkup = readDataArray(hitsArray);
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 
@@ -59,8 +63,10 @@ function renderData(dataResponse) {
     captionDelay: 250,
     captionsData: 'alt',
   });
-  lightbox.refresh();
-  if (dataResponse.data.hits.length < 40) {
+    lightbox.refresh();
+    //(((currentPage-1)*40)+dataResponse.data.hits.length) 
+    currentHits += dataResponse.data.hits.length;
+  if (currentHits >= dataResponse.data.totalHits) {
     Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );
@@ -108,7 +114,6 @@ function onLoadMoreBtn() {
   if (globalSearchQuery === '') return;
   currentPage += 1;
   loadMoreLnk.classList.add('hidden');
-  Notify.info(`onLoadMoreBtn ${currentPage}`);
   galleryFetch(globalSearchQuery, currentPage).then(data => {
     renderData(data);
   });
