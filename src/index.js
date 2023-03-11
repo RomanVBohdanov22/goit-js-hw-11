@@ -52,8 +52,7 @@ function renderData(dataResponse) {
     );
     return;
   }
-  Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images. 
-  ${dataResponse.data.hits.length}img.@ pg.${currentPage}`);
+  if (currentPage === 1 ) Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images.`);//${dataResponse.data.hits.length}img.@ pg.${currentPage}
 
  
   const galleryMurkup = readDataArray(hitsArray);
