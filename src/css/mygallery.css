@@ -21,12 +21,16 @@ body {
   padding-top: 12px;
   padding-bottom: 12px;
   background-color: blue;
-  /*border-radius: 10%;*/
 }
 
 .search-form input {
   width: 320px;
   border: none;
+  border-style: hidden;
+  border-radius: 3%;
+  font-weight: 500;
+  font-style: normal;
+  font-family: Tahoma, sans-serif;
 }
 
 .search-form button {
@@ -108,6 +112,7 @@ body {
   font-size: small;
   font-weight: 500;
   font-style: normal;
+  font-family: Tahoma, sans-serif;
   margin-bottom: 8px;
 }
 
