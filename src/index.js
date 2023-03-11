@@ -42,13 +42,13 @@ function onSubmitBtn(e) {
   let joinedLine = splittedLine.join('+');
   console.log(`${joinedLine}`);
   globalSearchQuery = joinedLine;
-  /* asink await */
+  /* async await */
   galleryFetch(globalSearchQuery, currentPage).then(data => {
     renderData(data);
   });
 }
 
-function renderData(dataResponse) {
+async function renderData(dataResponse) {
   console.log('this is renderData');
   gallery.innerHTML = '';
   const hitsArray = dataResponse.data.hits;
@@ -62,7 +62,7 @@ function renderData(dataResponse) {
   if (currentPage === 1 ) Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images.`);//${dataResponse.data.hits.length}img.@ pg.${currentPage}
 
  
-  const galleryMurkup = readDataArray(hitsArray);
+  const galleryMurkup = await readDataArray(hitsArray);
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 
 
