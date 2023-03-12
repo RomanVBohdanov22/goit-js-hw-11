@@ -26,22 +26,20 @@ loadMoreLnk.classList.add('hidden');
 function onSubmitBtn(e) {
   e.preventDefault();
     currentPage = 1;
-    currentHits = 0;
+  currentHits = 0;
+  
   const {
     elements: { searchQuery },
   } = e.currentTarget;
 
-  if (searchQuery.value.trim().length === 0) {
+  globalSearchQuery = searchQuery.value.trim();
+  if (globalSearchQuery.length === 0) {
     loadMoreLnk.classList.add('hidden');
     gallery.innerHTML = '';
     Notify.failure('Please, enter searchQuery!');
     return;
-  }
-  let splittedLine = searchQuery.value.trim().split(' ');
-  //прибрати split
-  let joinedLine = splittedLine.join('+');
-  console.log(`${joinedLine}`);
-  globalSearchQuery = joinedLine;
+  } 
+
   operateDataBackEnd(globalSearchQuery, currentPage);
 }
 async function operateDataBackEnd(searchQuery, searchPage) { 
