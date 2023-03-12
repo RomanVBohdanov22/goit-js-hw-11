@@ -33,24 +33,28 @@ body {
   border-collapse: collapse;
   font-weight: 500;
   font-size: 24px;
+  line-height: 1.8;
   font-style: normal;
   font-family: inherit; /*Helvetica, sans-serif;*/
+  padding-left: 8px;
+  padding-right: 30px;
+  overflow: hidden;
 }
 
 .search-form button {
   position: relative;
   display: flex;
   top: 0px;
-  right: 48px;
+  right: 56px;
   border-radius: 3%;
-  padding: 0;
+  padding: 4px;
   background: none;
   border: none;
   justify-content: center;
 }
 .search-form img {
-  height: 36px;
-  width: 36px;
+  height: 38px;
+  width: 38px;
 }
 .search-form button:hover {
   background: rgba(0, 0, 0, 0.14);
