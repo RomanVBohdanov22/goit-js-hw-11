@@ -79,13 +79,13 @@ async function renderData(dataResponse) {
     scrollMod();
   
     currentHits += hitsArray.length;
-    Notify.info(`Page: ${currentPage}, shown ${currentHits} from ${totalHitsValue}`);
+    Notify.info(`Page: ${currentPage}; ${currentHits} from ${totalHitsValue}; Query: "${globalSearchQuery}"`);
   if (currentHits >= totalHitsValue) {
     Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );
-    globalSearchQuery = '';
-    currentPage = 1;
+    //globalSearchQuery = '';
+    //currentPage = 1;
   } else loadMoreLnk.classList.remove('hidden');
 }
 
