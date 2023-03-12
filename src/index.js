@@ -3,6 +3,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { galleryFetch } from './js/galleryFetch';
+import { readDataArrayToMurcup } from './js/dataToMurcup';
 
 const formLnk = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
@@ -25,10 +26,11 @@ loadMoreLnk.classList.add('hidden');
 
 function onSubmitBtn(e) {
   e.preventDefault();
-  
+
   currentPage = 1;
   currentHits = 0;
-  
+  gallery.innerHTML = '';
+
   const {
     elements: { searchQuery },
   } = e.currentTarget;
@@ -36,7 +38,6 @@ function onSubmitBtn(e) {
   globalSearchQuery = searchQuery.value.trim();
   if (globalSearchQuery.length === 0) {
     loadMoreLnk.classList.add('hidden');
-    gallery.innerHTML = '';
     Notify.failure('Please, enter searchQuery!');
     return;
   } 
@@ -56,7 +57,7 @@ async function operateDataBackEnd(searchQuery, searchPage) {
 }
 
 async function renderData(dataResponse) {  
-  gallery.innerHTML = '';
+  //gallery.innerHTML = '';
   const hitsArray = dataResponse.hits;
   const totalHitsValue = dataResponse.totalHits;
   loadMoreLnk.classList.add('hidden');
@@ -67,16 +68,16 @@ async function renderData(dataResponse) {
     return;
   }
  
-  const galleryMurkup = await readDataArray(hitsArray);
-  gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
+  const galleryMurkup = await readDataArrayToMurcup(hitsArray);
+  gallery.insertAdjacentHTML('beforeend', galleryMurkup); //'afterbegin'
 
   if (currentPage === 1) {
-    Notify.success(`Hooray! We found ${totalHitsValue} images.`);
-    //scrollMod();
+    Notify.success(`Hooray! We found ${totalHitsValue} images.`);  
   }
 
     lightbox.refresh();
-
+    scrollMod();
+  
     currentHits += hitsArray.length;
     Notify.info(`Page: ${currentPage}, shown ${currentHits} from ${totalHitsValue}`);
   if (currentHits >= totalHitsValue) {
@@ -86,41 +87,6 @@ async function renderData(dataResponse) {
     globalSearchQuery = '';
     currentPage = 1;
   } else loadMoreLnk.classList.remove('hidden');
-}
-
-async function readDataArray(hitsArray) {
-  //previewURL
-  return await hitsArray
-    .map(
-      ({
-        largeImageURL,
-        webformatURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
-  <div class="photo-container"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></div>
-  <div class="info">
-    <p class="info-item">
-      <b>Likes ${likes}</b>
-    </p>
-    <p class="info-item">
-      <b>Views ${views}</b>
-    </p>
-    <p class="info-item">
-      <b>Comments ${comments}</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads ${downloads}</b>
-    </p>
-  </div>
-</div></a>`;
-      }
-    )
-    .join('');
 }
 
 function onLoadMoreBtn() {
