@@ -43,21 +43,18 @@ function onSubmitBtn(e) {
   console.log(`${joinedLine}`);
   globalSearchQuery = joinedLine;
   operateDataBackEnd(globalSearchQuery, currentPage);
-
 }
 async function operateDataBackEnd(searchQuery, searchPage) { 
   try { 
     const data = await galleryFetch(searchQuery, searchPage);
-    console.log(data);
     await renderData(data);
-    return data;
+    //return data;
   }
   catch (e) { 
     Notify.failure(e.message);
   }
-    /*galleryFetch(searchQuery, searchPage).then(data => {
-    renderData(data);});*/
 }
+
 async function renderData(dataResponse) {
   console.log('this is renderData');
   gallery.innerHTML = '';
@@ -69,12 +66,14 @@ async function renderData(dataResponse) {
     );
     return;
   }
-  if (currentPage === 1 ) Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images.`);//${dataResponse.data.hits.length}img.@ pg.${currentPage}
-
  
   const galleryMurkup = await readDataArray(hitsArray);
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 
+  if (currentPage === 1) {
+    Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images.`);
+    //scrollMod();
+  }
 
     lightbox.refresh();
 
@@ -129,16 +128,19 @@ function onLoadMoreBtn() {
   currentPage += 1;
   loadMoreLnk.classList.add('hidden');
   operateDataBackEnd(globalSearchQuery, currentPage);
+
 }
 
-///
-/*
-const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
+function scrollMod()
+{ 
+  const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
 
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});*/
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: "smooth",
+  });
+}
+
 

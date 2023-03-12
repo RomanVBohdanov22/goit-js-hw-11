@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const axios = require('axios').default;
 const BASE_URL = 'https://pixabay.com/api/?key=';
 const KEY = '34203020-9ccd90725bbcf7c5b689f6c58';
@@ -16,7 +17,7 @@ export async function galleryFetch(queryLine, currentPage) {
         return response;
     }
     catch (e) { 
-        console.error(e);
+        Notify.failure(e.message);
     }
 
 }
