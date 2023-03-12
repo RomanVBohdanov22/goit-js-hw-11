@@ -1,4 +1,4 @@
-export async function readDataArrayToMurcup(hitsArray) {
+export async function readDataArrayToMarcup(hitsArray) {
   //previewURL
   return await hitsArray
     .map(

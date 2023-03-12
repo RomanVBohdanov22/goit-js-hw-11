@@ -3,7 +3,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { galleryFetch } from './js/galleryFetch';
-import { readDataArrayToMurcup } from './js/dataToMurcup';
+import { readDataArrayToMarcup } from './js/dataToMarcup';
 
 const formLnk = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
@@ -67,7 +67,7 @@ async function renderData(dataResponse) {
     return;
   }
  
-  const galleryMurkup = await readDataArrayToMurcup(hitsArray);
+  const galleryMurkup = await readDataArrayToMarcup(hitsArray);
   gallery.insertAdjacentHTML('beforeend', galleryMurkup); //'afterbegin'
 
   if (currentPage === 1) {
