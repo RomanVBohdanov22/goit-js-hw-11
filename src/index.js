@@ -25,7 +25,8 @@ loadMoreLnk.classList.add('hidden');
 
 function onSubmitBtn(e) {
   e.preventDefault();
-    currentPage = 1;
+  
+  currentPage = 1;
   currentHits = 0;
   
   const {
@@ -42,6 +43,7 @@ function onSubmitBtn(e) {
 
   operateDataBackEnd(globalSearchQuery, currentPage);
 }
+
 async function operateDataBackEnd(searchQuery, searchPage) { 
   try { 
     const data = await galleryFetch(searchQuery, searchPage);
@@ -53,12 +55,12 @@ async function operateDataBackEnd(searchQuery, searchPage) {
   }
 }
 
-async function renderData(dataResponse) {
-  console.log('this is renderData');
+async function renderData(dataResponse) {  
   gallery.innerHTML = '';
-  const hitsArray = dataResponse.data.hits;
+  const hitsArray = dataResponse.hits;
+  const totalHitsValue = dataResponse.totalHits;
   loadMoreLnk.classList.add('hidden');
-  if (dataResponse.data.totalHits <= 0) {
+  if (totalHitsValue <= 0) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
@@ -69,15 +71,15 @@ async function renderData(dataResponse) {
   gallery.insertAdjacentHTML('afterbegin', galleryMurkup);
 
   if (currentPage === 1) {
-    Notify.success(`Hooray! We found ${dataResponse.data.totalHits} images.`);
+    Notify.success(`Hooray! We found ${totalHitsValue} images.`);
     //scrollMod();
   }
 
     lightbox.refresh();
 
-    currentHits += dataResponse.data.hits.length;
-    Notify.info(`Page: ${currentPage}, shown ${currentHits} from ${dataResponse.data.totalHits}`);
-  if (currentHits >= dataResponse.data.totalHits) {
+    currentHits += hitsArray.length;
+    Notify.info(`Page: ${currentPage}, shown ${currentHits} from ${totalHitsValue}`);
+  if (currentHits >= totalHitsValue) {
     Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );

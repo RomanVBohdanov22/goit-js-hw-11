@@ -19,7 +19,7 @@ export async function galleryFetch(queryLine, currentPage) {
                 }
             }
         ); 
-        return response;
+        return response.data;
     }
     catch (e) { 
         Notify.failure(e.message);
