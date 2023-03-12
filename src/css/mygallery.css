@@ -29,10 +29,9 @@ body {
   border: none;
   border-style: hidden;
   border-collapse: collapse;
-  /*border-radius: 3%;*/
   font-weight: 700;
   font-style: normal;
-  font-family: inherit; /*Helvetica, sans-serif; /*Tahoma, sans-serif;*/
+  font-family: inherit; /*Helvetica, sans-serif;*/
 }
 
 .search-form button {
@@ -45,7 +44,6 @@ body {
   background: none;
   border: none;
   justify-content: center;
-  /*padding-left: 3px;*/
 }
 
 .search-form button:hover {
