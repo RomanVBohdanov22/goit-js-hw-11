@@ -49,7 +49,6 @@ async function operateDataBackEnd(searchQuery, searchPage) {
   try { 
     const data = await galleryFetch(searchQuery, searchPage);
     await renderData(data);
-    //return data;
   }
   catch (e) { 
     Notify.failure(e.message);
@@ -84,8 +83,6 @@ async function renderData(dataResponse) {
     Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );
-    //globalSearchQuery = '';
-    //currentPage = 1;
   } else loadMoreLnk.classList.remove('hidden');
 }
 
