@@ -1,5 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import OnlyScroll from 'only-scrollbar';
+
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { galleryFetch } from './js/galleryFetch';
@@ -12,6 +14,12 @@ const loadMoreLnk = document.querySelector('.load-more');
 let currentPage = 1;
 let currentHits = 0;
 let globalSearchQuery = '';
+
+//const scroll = new OnlyScroll(document.querySelector('.scroll-container'));
+const scroll = new OnlyScroll(gallery, {
+    damping: 0.8,
+    eventContainer: window
+});
 //
 
   var lightbox = new SimpleLightbox('.gallery a', {
@@ -74,7 +82,8 @@ async function renderData(dataResponse) {
     Notify.success(`Hooray! We found ${totalHitsValue} images.`);  
   }
 
-    lightbox.refresh();
+  lightbox.refresh();
+  scroll.destroy();
     scrollMod();
   
     currentHits += hitsArray.length;
